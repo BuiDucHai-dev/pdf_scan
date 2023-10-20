@@ -12,11 +12,11 @@ public struct Photo: Identifiable, Equatable {
 //    The ID of the captured photo
     public var id: String
 //    Data representation of the captured photo
-    public var originalData: Data
+    public var path: URL
     
-    public init(id: String = UUID().uuidString, originalData: Data) {
+    public init(id: String = UUID().uuidString, path: URL) {
         self.id = id
-        self.originalData = originalData
+        self.path = path
     }
 }
 

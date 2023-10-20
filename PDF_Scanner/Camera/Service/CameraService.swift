@@ -410,8 +410,8 @@ public class CameraService: NSObject, Identifiable {
                 
             }, completionHandler: { [weak self] (photoCaptureProcessor) in
                 // When the capture is complete, remove a reference to the photo capture delegate so it can be deallocated.
-                if let data = photoCaptureProcessor.photoData {
-                    self?.photo = Photo(originalData: data)
+                if let url = photoCaptureProcessor.imageUrl {
+                    self?.photo = Photo(path: url)
                     print("passing photo")
                 } else {
                     print("No photo data")

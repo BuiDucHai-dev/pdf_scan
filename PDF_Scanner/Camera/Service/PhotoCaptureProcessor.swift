@@ -22,6 +22,7 @@ class PhotoCaptureProcessor: NSObject {
     
 //    The actual captured photo's data
     var photoData: Data?
+    var imageUrl: URL?
     
 //    The maximum time lapse before telling UI to show a spinner
     private var maxPhotoProcessingTime: CMTime?
@@ -82,12 +83,11 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
     func saveToPhotoLibrary(_ photoData: Data, url: ((String) -> ())? = nil) {
     
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileURL = documentsDirectory.appendingPathComponent("hello.jpg")
-        
+        imageUrl = documentsDirectory.appendingPathComponent("hello.jpg")
         do {
-            try photoData.write(to: fileURL)
+            try photoData.write(to: imageUrl!)
             self.completionHandler(self)
-            print("Image saved to: \(fileURL.path)")
+            print("Image saved to: \(imageUrl!.path)")
         } catch {
             print("Error saving image: \(error.localizedDescription)")
         }
@@ -102,7 +102,7 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
             }
             return
         } else {
-            guard let data  = photoData else {
+            guard let data = photoData else {
                 DispatchQueue.main.async {
                     self.completionHandler(self)
                 }

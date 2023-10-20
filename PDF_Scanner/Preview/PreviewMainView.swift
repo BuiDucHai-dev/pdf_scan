@@ -37,6 +37,17 @@ struct PreviewMainView: View {
                         
                         TabView(selection: $currentPage) {
                             ForEach(photo.indices, id: \.self) { index in
+                                
+//                                if let imageData = try? Data(contentsOf: getURL()), let uiImage = UIImage(data: imageData) {
+//                                    Image(uiImage:uiImage)
+////                                    Image("image_test")
+//                                        .resizable()
+//                                        .scaledToFit()
+//                                        .clipShape(RoundedRectangle(cornerRadius: 7))
+//                                        .padding(.top, 12)
+//                                        .padding(.bottom, 70)
+//                                }
+                                
                                 if let image = photo[index].image {
                                     Image(uiImage: image)
                                         .resizable()
@@ -66,19 +77,25 @@ struct PreviewMainView: View {
                         .font(.body)
                         .fontWeight(.medium)
                 }))
-                VStack {
-                    Spacer()
-                    PreviewMainBottomView(photo: $photo, currentItem: $cr, action: $action) {
-                        
-                    }
-                    .background(Color.white)
-                }
+//                VStack {
+//                    Spacer()
+//                    PreviewMainBottomView(photo: $photo, currentItem: $cr, action: $action) {
+//
+//                    }
+//                    .background(Color.white)
+//                }
             }
         }
         .onChange(of: currentPage) { newValue in
             print("New value \(newValue)")
             cr = newValue
         }
+    }
+    
+    private func getURL() -> URL {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return  documentsDirectory.appendingPathComponent("hello.jpg")
+        
     }
 }
 
